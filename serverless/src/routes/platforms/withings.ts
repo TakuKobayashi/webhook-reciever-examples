@@ -20,7 +20,6 @@ withingsRouter.get('/login', (req: Request, res: Response, next: NextFunction) =
     scope: ['user.activity', 'user.metrics'].join(','),
     redirect_uri: getCallbackUrl(req),
   };
-  console.log(authorizeQueryObj);
   res.redirect(stringifyUrl({ url: 'https://account.withings.com/oauth2_user/authorize2', query: authorizeQueryObj }));
 });
 
