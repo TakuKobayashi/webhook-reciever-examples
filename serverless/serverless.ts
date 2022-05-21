@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 const serverlessConfiguration: AWS = {
-  service: 'cc-calculator',
+  service: 'webhook-recievers',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild', 'serverless-offline'],
   provider: {
