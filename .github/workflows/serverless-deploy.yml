@@ -19,6 +19,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Register .env
+      working-directory: ./serverless
+      env:
+        WITHINGS_API_CLIENT_ID: ${{ secrets.WITHINGS_API_CLIENT_ID }}
+        WITHINGS_API_SECRET: ${{ secrets.WITHINGS_API_SECRET }}
+      run: |
+        echo "WITHINGS_API_CLIENT_ID=${WITHINGS_API_CLIENT_ID}" >> ./.env
+        echo "WITHINGS_API_SECRET=${WITHINGS_API_SECRET}" >> ./.env
     - name: yarn install
       working-directory: ./serverless
       run: yarn install
