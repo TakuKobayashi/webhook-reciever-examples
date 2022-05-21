@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { stringify, stringifyUrl } from 'query-string';
 import { createHmac } from 'crypto';
 const { getCurrentInvoke } = require('@vendia/serverless-express');
@@ -28,6 +28,12 @@ withingsRouter.get('/callback', async (req: Request, res: Response, next: NextFu
     res.send('callback error');
     return;
   }
+  const oauthRes = await requestAccessToken(req);
+  // このような形で返ってくる {"status":0,"body":{"userid":"...","access_token":"...","refresh_token":"...","scope":"user.activity,user.metrics","expires_in":10800,"token_type":"Bearer"}}
+  res.json(oauthRes.data);
+});
+
+async function requestAccessToken(req: Request): Promise<AxiosResponse<any, any>> {
   const nonce = await requestNonse();
   // See this: https://developer.withings.com/developer-guide/v3/get-access/sign-your-requests/
   const signature = createHmac('sha256', process.env.WITHINGS_API_SECRET)
@@ -44,9 +50,8 @@ withingsRouter.get('/callback', async (req: Request, res: Response, next: NextFu
     code: oauthCallbackCode,
     redirect_uri: getCallbackUrl(req),
   };
-  const oauthRes = await axios.post('https://wbsapi.withings.net/v2/oauth2', stringify(oauthObj));
-  res.json(oauthRes.data);
-});
+  return axios.post('https://wbsapi.withings.net/v2/oauth2', stringify(oauthObj));
+}
 
 async function requestNonse(): Promise<string> {
   // see this: https://developer.withings.com/api-reference/#tag/signature
