@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/test', (req, res, next) => {
+  console.log(req.query)
   res.status(200).json({
     message: 'Hello from root!',
   });
