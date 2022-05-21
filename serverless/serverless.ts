@@ -1,9 +1,12 @@
 import type { AWS } from '@serverless/typescript';
 
+import { config } from 'dotenv';
+const configedEnv = config();
+
 const serverlessConfiguration: AWS = {
   service: 'webhook-recievers',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-offline'],
+  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-dotenv-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -50,6 +53,10 @@ const serverlessConfiguration: AWS = {
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
+    },
+    dotenv: {
+      path: './.env',
+      include: Object.keys(configedEnv.parsed),
     },
   },
 };
