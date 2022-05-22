@@ -6,10 +6,9 @@ import { withingsRouter } from './routes/platforms/withings';
 
 const app = express();
 
-app.use('/platforms/withings', withingsRouter);
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/platforms/withings', withingsRouter);
 
 app.get('/test', (req, res, next) => {
   res.status(200).json({
