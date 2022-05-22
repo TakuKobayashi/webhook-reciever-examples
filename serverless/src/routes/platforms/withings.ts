@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import axios, { AxiosResponse } from 'axios';
-import { stringify, stringifyUrl } from 'query-string';
+import { stringify, stringifyUrl, parse } from 'query-string';
 import { createHmac } from 'crypto';
 const { getCurrentInvoke } = require('@vendia/serverless-express');
 
@@ -96,8 +96,11 @@ withingsRouter.get('/registering_webhook_list', async (req: Request, res: Respon
 });
 
 withingsRouter.post('/webhook', async (req: Request, res: Response, next: NextFunction) => {
+  // req.body はこんな感じ
+  // userid=4360293&startdate=1653196096&enddate=1653196097&appli=1
+  console.log(req.body);
   /*
-  req.body はこんな感じ
+  これをparseしてこうする
   {
     userid: '4360293',
     startdate: '1653097272',
@@ -105,9 +108,9 @@ withingsRouter.post('/webhook', async (req: Request, res: Response, next: NextFu
     appli: '1'
   }
   */
-  console.log(req.body);
+  const payload = parse(req.body);
   const response = await axios.post(process.env.WITHINGS_API_SECRET, {
-    text: 'User Id:' + req.body.userid + ' のWithingsに乗って体重を図りました!!',
+    text: 'User Id:' + payload.userid + ' のWithingsに乗って体重を図りました!!',
   });
   console.log(response.data);
   res.send('OK');
