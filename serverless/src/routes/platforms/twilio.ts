@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { parse } from 'query-string';
 
 const express = require('express');
 const twilioRouter = express.Router();
@@ -8,7 +9,8 @@ twilioRouter.get('/', async (req: Request, res: Response, next: NextFunction) =>
 });
 
 twilioRouter.post('/webhook', async (req: Request, res: Response, next: NextFunction) => {
-  const payload = JSON.parse(req.body);
+  console.log(req.body);
+  const payload = parse(req.body);
   console.log(payload);
   res.send(`
     <Response>
