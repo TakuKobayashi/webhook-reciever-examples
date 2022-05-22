@@ -24,9 +24,11 @@ jobs:
       env:
         WITHINGS_API_CLIENT_ID: ${{ secrets.WITHINGS_API_CLIENT_ID }}
         WITHINGS_API_SECRET: ${{ secrets.WITHINGS_API_SECRET }}
+        DEMO_SLACK_SEND_WEBHOOK_URL: ${{ secrets.DEMO_SLACK_SEND_WEBHOOK_URL }}
       run: |
         echo "WITHINGS_API_CLIENT_ID=${WITHINGS_API_CLIENT_ID}" >> ./.env
         echo "WITHINGS_API_SECRET=${WITHINGS_API_SECRET}" >> ./.env
+        echo "DEMO_SLACK_SEND_WEBHOOK_URL=${DEMO_SLACK_SEND_WEBHOOK_URL}" >> ./.env
     - name: yarn install
       working-directory: ./serverless
       run: yarn install
