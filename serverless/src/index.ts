@@ -7,6 +7,7 @@ import { stripeRouter } from './routes/platforms/stripe';
 
 const app = express();
 
+app.use(bodyParser.text({ type: '*/*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/platforms/withings', withingsRouter);
