@@ -57,9 +57,11 @@ stripeRouter.post('/webhook', async (req: Request, res: Response, next: NextFunc
   // その他のAPIはこちらを参照 https://stripe.com/docs/api
   const payload = JSON.parse(req.body);
   console.log(payload);
+  /*
   await axios.post(process.env.DEMO_SLACK_SEND_WEBHOOK_URL, {
     text: 'stripe からWebhookを受け取りました!!内容はこちらです!!```' + req.body + '```',
   });
+  */
   res.send('OK');
 });
 

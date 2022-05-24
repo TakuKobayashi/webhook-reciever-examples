@@ -110,10 +110,12 @@ withingsRouter.post('/webhook', async (req: Request, res: Response, next: NextFu
   */
   const payload = parse(req.body);
   console.log(payload);
+  /*
   const response = await axios.post(process.env.DEMO_SLACK_SEND_WEBHOOK_URL, {
     text: 'User Id:' + payload.userid.toString() + ' のWithingsに乗って体重を図りました!!',
   });
   console.log(response.data);
+  */
   res.send('OK');
 });
 

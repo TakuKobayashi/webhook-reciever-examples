@@ -54,9 +54,11 @@ twilioRouter.post('/voice_webhook', async (req: Request, res: Response, next: Ne
   */
   const payload = parse(req.body);
   console.log(payload);
+  /*
   await axios.post(process.env.DEMO_SLACK_SEND_WEBHOOK_URL, {
     text: '電話暗号:' + payload.From.toString() + ' から電話がかかってきました!!',
   });
+  */
   res.send(`
     <Response>
       <Say language="ja-jp">起きろー！！</Say>
@@ -95,9 +97,11 @@ twilioRouter.post('/message_webhook', async (req: Request, res: Response, next: 
   }
   */
   const payload = parse(req.body);
+  /*
   await axios.post(process.env.DEMO_SLACK_SEND_WEBHOOK_URL, {
     text: '電話暗号:' + payload.From.toString() + ' から ' + payload.Body.toString() + ' というメッセージのSMSを受け取りました!!',
   });
+  */
   res.send(`
     <Response>
       <Say language="ja-jp">起きろー！！</Say>
